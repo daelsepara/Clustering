@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="utf-8"?>
+<stetic-interface>
+  <configuration>
+    <images-root-path>..</images-root-path>
+  </configuration>
+  <import>
+    <widget-library name="../bin/Release/Clustering.exe" internal="true" />
+  </import>
+  <widget class="Gtk.Window" id="MainWindow" design-size="800 600">
+    <action-group name="Default">
+      <action id="QuitButton">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-quit</property>
+        <property name="Tooltip" translatable="yes">Exit GTK Clustering</property>
+        <signal name="Activated" handler="OnQuitButtonClicked" />
+      </action>
+      <action id="AboutButton">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-info</property>
+        <property name="Tooltip" translatable="yes">About GTK Clustering</property>
+        <signal name="Activated" handler="OnAboutButtonClicked" />
+      </action>
+      <action id="RunButton">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-media-play</property>
+        <property name="Tooltip" translatable="yes">Start clustering</property>
+        <signal name="Activated" handler="OnRunButtonClicked" />
+      </action>
+      <action id="ResetButton">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-media-rewind</property>
+        <property name="Tooltip" translatable="yes">Restart clustering</property>
+        <signal name="Activated" handler="OnResetButtonClicked" />
+      </action>
+      <action id="StopButton">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-media-stop</property>
+        <property name="Tooltip" translatable="yes">Stop clustering</property>
+        <signal name="Activated" handler="OnStopButtonClicked" />
+      </action>
+      <action id="LoadCentroidsButton">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-properties</property>
+        <property name="Tooltip" translatable="yes">Load centroids</property>
+        <signal name="Activated" handler="OnLoadCentroidsButtonClicked" />
+      </action>
+      <action id="SaveDataButton">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-save-as</property>
+        <property name="Tooltip" translatable="yes">Save as new data</property>
+        <signal name="Activated" handler="OnSaveDataButtonClicked" />
+      </action>
+    </action-group>
+    <property name="MemberName" />
+    <property name="WidthRequest">800</property>
+    <property name="HeightRequest">600</property>
+    <property name="Title" translatable="yes">MainWindow</property>
+    <property name="Icon">resource:Clustering.atoms.png</property>
+    <property name="WindowPosition">CenterAlways</property>
+    <property name="Resizable">False</property>
+    <property name="DefaultWidth">800</property>
+    <property name="DefaultHeight">600</property>
+    <signal name="DeleteEvent" handler="OnDeleteEvent" />
+    <child>
+      <widget class="Gtk.Fixed" id="MainLayout">
+        <property name="MemberName" />
+        <property name="HasWindow">False</property>
+        <child>
+          <widget class="Gtk.Toolbar" id="MainToolbar">
+            <property name="MemberName" />
+            <property name="ShowArrow">False</property>
+            <property name="ButtonStyle">Icons</property>
+            <node name="MainToolbar" type="Toolbar">
+              <node type="Toolitem" action="AboutButton" />
+              <node type="Toolitem" action="QuitButton" />
+            </node>
+          </widget>
+          <packing>
+            <property name="X">20</property>
+            <property name="Y">10</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Notebook" id="MainNotebook">
+            <property name="MemberName" />
+            <property name="WidthRequest">760</property>
+            <property name="HeightRequest">520</property>
+            <property name="CanFocus">True</property>
+            <property name="CurrentPage">0</property>
+            <signal name="SwitchPage" handler="OnMainNotebookSwitchPage" />
+            <child>
+              <widget class="Gtk.Fixed" id="PageLayoutData">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+                <child>
+                  <widget class="Gtk.Entry" id="DataFileName">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">300</property>
+                    <property name="IsEditable">True</property>
+                    <property name="InvisibleChar">•</property>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">40</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="OpenDataButton">
+                    <property name="MemberName" />
+                    <property name="Tooltip" translatable="yes" />
+                    <property name="Type">TextAndIcon</property>
+                    <property name="Icon">stock:gtk-open Menu</property>
+                    <property name="Label" translatable="yes" />
+                    <property name="FocusOnClick">False</property>
+                    <signal name="Clicked" handler="OnOpenDataButtonClicked" />
+                  </widget>
+                  <packing>
+                    <property name="X">330</property>
+                    <property name="Y">40</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="ReloadDataButton">
+                    <property name="MemberName" />
+                    <property name="Tooltip" translatable="yes" />
+                    <property name="Type">TextAndIcon</property>
+                    <property name="Icon">stock:gtk-revert-to-saved Menu</property>
+                    <property name="Label" translatable="yes" />
+                    <property name="FocusOnClick">False</property>
+                    <signal name="Clicked" handler="OnReloadDataButtonClicked" />
+                  </widget>
+                  <packing>
+                    <property name="X">360</property>
+                    <property name="Y">40</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelDataFilename">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Data&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">20</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="DataWindow">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">370</property>
+                    <property name="HeightRequest">140</property>
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="Gtk.TextView" id="DataView">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="ShowScrollbars">True</property>
+                        <property name="Text" translatable="yes" />
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">80</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="ClearDataButton">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Type">TextOnly</property>
+                    <property name="Label" translatable="yes">Clear</property>
+                    <property name="UseUnderline">True</property>
+                    <property name="FocusOnClick">False</property>
+                    <signal name="Clicked" handler="OnClearDataButtonClicked" />
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">230</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ComboBox" id="DelimiterBox">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">200</property>
+                    <property name="IsTextCombo">True</property>
+                    <property name="Items" translatable="yes" />
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">40</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelDelimeters">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Delimiters&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">20</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelFeatures">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Features&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">80</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.SpinButton" id="Features">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">200</property>
+                    <property name="Upper">1000</property>
+                    <property name="PageIncrement">1</property>
+                    <property name="StepIncrement">1</property>
+                    <property name="ClimbRate">1</property>
+                    <property name="Numeric">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">100</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelDataPoints">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Data points&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">170</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.SpinButton" id="DataPoints">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">200</property>
+                    <property name="Upper">100000</property>
+                    <property name="PageIncrement">1</property>
+                    <property name="StepIncrement">1</property>
+                    <property name="ClimbRate">1</property>
+                    <property name="Numeric">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">190</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.CheckButton" id="IgnoreLastColumn">
+                    <property name="MemberName" />
+                    <property name="Label" translatable="yes">Ignore last column</property>
+                    <property name="Active">True</property>
+                    <property name="DrawIndicator">True</property>
+                    <property name="HasLabel">True</property>
+                    <property name="UseUnderline">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">140</property>
+                  </packing>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="LabelPageData">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">Data</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Fixed" id="PageLayoutCluster">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+                <child>
+                  <widget class="Gtk.Label" id="LabelClusters">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Cluster/Classification&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">20</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="ClusterWindow">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">310</property>
+                    <property name="HeightRequest">140</property>
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="Gtk.TextView" id="ClusterView">
+                        <property name="MemberName" />
+                        <property name="ShowScrollbars">True</property>
+                        <property name="Editable">False</property>
+                        <property name="Text" translatable="yes" />
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">40</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelCentroids">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Centroids&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">190</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="CentroidsWindow">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">370</property>
+                    <property name="HeightRequest">140</property>
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="Gtk.TextView" id="CentroidsView">
+                        <property name="MemberName" />
+                        <property name="ShowScrollbars">True</property>
+                        <property name="Editable">False</property>
+                        <property name="Text" translatable="yes" />
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">210</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelNumClusters">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;# of Clusters&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">190</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.SpinButton" id="NumClusters">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">310</property>
+                    <property name="CanFocus">True</property>
+                    <property name="Lower">1</property>
+                    <property name="Upper">1000</property>
+                    <property name="PageIncrement">1</property>
+                    <property name="StepIncrement">1</property>
+                    <property name="ClimbRate">1</property>
+                    <property name="Numeric">True</property>
+                    <property name="Value">1</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">210</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelClustering">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Clustering&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">370</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ProgressBar" id="ClusteringProgress">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">370</property>
+                    <property name="HeightRequest">30</property>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">390</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Toolbar" id="ClusteringToolbar">
+                    <property name="MemberName" />
+                    <property name="ShowArrow">False</property>
+                    <property name="ButtonStyle">Icons</property>
+                    <node name="ClusteringToolbar" type="Toolbar">
+                      <node type="Toolitem" action="RunButton" />
+                      <node type="Toolitem" action="StopButton" />
+                      <node type="Toolitem" action="ResetButton" />
+                    </node>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">430</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelIterations">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Maximum # of Iterations&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">250</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.SpinButton" id="MaxIterations">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">310</property>
+                    <property name="CanFocus">True</property>
+                    <property name="Lower">100</property>
+                    <property name="Upper">1000000</property>
+                    <property name="PageIncrement">1</property>
+                    <property name="StepIncrement">1</property>
+                    <property name="ClimbRate">1</property>
+                    <property name="Numeric">True</property>
+                    <property name="Value">100</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">270</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelError">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Average SSE/Error&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">310</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Entry" id="Error">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">310</property>
+                    <property name="IsEditable">False</property>
+                    <property name="InvisibleChar">•</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">330</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="LabelPageCluster">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">Compute</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Fixed" id="PageLayoutSave">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+                <child>
+                  <widget class="Gtk.Entry" id="CentroidFileName">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">300</property>
+                    <property name="IsEditable">True</property>
+                    <property name="InvisibleChar">•</property>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">190</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Entry" id="ClusterFileName">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">240</property>
+                    <property name="IsEditable">True</property>
+                    <property name="InvisibleChar">•</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">190</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="OpenCentroidsButton">
+                    <property name="MemberName" />
+                    <property name="Type">TextAndIcon</property>
+                    <property name="Icon">stock:gtk-open Menu</property>
+                    <property name="Label" translatable="yes" />
+                    <property name="FocusOnClick">False</property>
+                    <signal name="Clicked" handler="OnOpenCentroidsButtonClicked" />
+                  </widget>
+                  <packing>
+                    <property name="X">330</property>
+                    <property name="Y">190</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="SaveCentroidsButton">
+                    <property name="MemberName" />
+                    <property name="Type">TextAndIcon</property>
+                    <property name="Icon">stock:gtk-save Menu</property>
+                    <property name="Label" translatable="yes" />
+                    <property name="FocusOnClick">False</property>
+                    <signal name="Clicked" handler="OnSaveCentroidsButtonClicked" />
+                  </widget>
+                  <packing>
+                    <property name="X">360</property>
+                    <property name="Y">190</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="OpenClustersButton">
+                    <property name="MemberName" />
+                    <property name="Type">TextAndIcon</property>
+                    <property name="Icon">stock:gtk-open Menu</property>
+                    <property name="Label" translatable="yes" />
+                    <property name="FocusOnClick">False</property>
+                    <signal name="Clicked" handler="OnOpenClustersButtonClicked" />
+                  </widget>
+                  <packing>
+                    <property name="X">670</property>
+                    <property name="Y">190</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="SaveClustersButton">
+                    <property name="MemberName" />
+                    <property name="Type">TextAndIcon</property>
+                    <property name="Icon">stock:gtk-save Menu</property>
+                    <property name="Label" translatable="yes" />
+                    <property name="FocusOnClick">False</property>
+                    <signal name="Clicked" handler="OnSaveClustersButtonClicked" />
+                  </widget>
+                  <packing>
+                    <property name="X">700</property>
+                    <property name="Y">190</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Toolbar" id="CentroidsToolbar">
+                    <property name="MemberName" />
+                    <property name="ShowArrow">False</property>
+                    <property name="ButtonStyle">Icons</property>
+                    <node name="CentroidsToolbar" type="Toolbar">
+                      <node type="Toolitem" action="LoadCentroidsButton" />
+                    </node>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">430</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelLoadCentroids">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Initialize centroids&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">70</property>
+                    <property name="Y">440</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Toolbar" id="SaveToolbar">
+                    <property name="MemberName" />
+                    <property name="ShowArrow">False</property>
+                    <property name="ButtonStyle">Icons</property>
+                    <node name="SaveToolbar" type="Toolbar">
+                      <node type="Toolitem" action="SaveDataButton" />
+                    </node>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">380</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelSaveData">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Save as new data&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">70</property>
+                    <property name="Y">390</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Entry" id="NewDataFileName">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">300</property>
+                    <property name="IsEditable">True</property>
+                    <property name="InvisibleChar">•</property>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">340</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelNewData">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;New Data&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">320</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="LabelPageSave">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">Cluster</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Fixed" id="PageLayoutAbout">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+                <child>
+                  <widget class="Gtk.Label" id="LabelAboutSoftware">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;GTK Clustering Software&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">20</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="AboutWindow">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">310</property>
+                    <property name="HeightRequest">200</property>
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="Gtk.TextView" id="AboutView">
+                        <property name="MemberName" />
+                        <property name="ShowScrollbars">True</property>
+                        <property name="Editable">False</property>
+                        <property name="CursorVisible">False</property>
+                        <property name="AcceptsTab">False</property>
+                        <property name="Text" translatable="yes">GTK Clustering software utilizes K-means algorithm to group data points into clusters. However, you must specify the number of clusters (K) from the 'Compute' page before running the algorithm.
+
+Centroids are initialized at by randomly selecting K points from the input data. An option to initialize centroid values from a text file is also available. When loading data sets, the last column of each line is assumed to be the cluster number (or category). You may override this behavior by un-checking the 'Ignore last column' option. You may set the maximum number of iterations from the 'Compute page'. 
+
+On the Cluster page, you may export and import centroids or cluster numbers to/from a text file. An option to export both sets of values into a single text file is also available.
+
+More data sets are available at:
+
+P. Fränti and S. Sieranoja
+Applied Intelligence, 1-17, 2018
+https://doi.org/10.1007/s10489-018-1238-7
+
+http://cs.joensuu.fi/sipu/datasets/</property>
+                        <property name="WrapMode">Word</property>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">40</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="LabelCredits">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Credits&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">260</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="CreditsWindow">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">310</property>
+                    <property name="HeightRequest">100</property>
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="Gtk.TextView" id="CreditsView">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="ShowScrollbars">True</property>
+                        <property name="Editable">False</property>
+                        <property name="CursorVisible">False</property>
+                        <property name="AcceptsTab">False</property>
+                        <property name="Text" translatable="yes">Icons made by prettycons from www.flaticon.com is licensed by Creative Commons BY 3.0</property>
+                        <property name="WrapMode">Word</property>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="X">20</property>
+                    <property name="Y">280</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Image" id="ClusteringImage">
+                    <property name="MemberName" />
+                    <property name="Pixbuf">resource:Clustering.atoms256.png</property>
+                  </widget>
+                  <packing>
+                    <property name="X">420</property>
+                    <property name="Y">80</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">3</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="LabelPageAbout">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">About</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">20</property>
+            <property name="Y">60</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+</stetic-interface>
