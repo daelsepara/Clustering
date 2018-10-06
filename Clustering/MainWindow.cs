@@ -11,9 +11,9 @@ using System.Threading;
 public partial class MainWindow : Gtk.Window
 {
 	Dialog Confirm;
-	FileChooserDialog TextSaver, TextLoader;
+	FileChooserDialog TextSaver, TextLoader, ImageSaver;
 
-	string DataFile, CentroidsFile, ClustersFile, NewDataFile;
+	string DataFile, CentroidsFile, ClustersFile, NewDataFile, FileName;
 
 	List<Delimiter> Delimiters = new List<Delimiter>();
 
@@ -28,7 +28,8 @@ public partial class MainWindow : Gtk.Window
 		DATA = 0,
 		CLUSTER = 1,
 		SAVE = 2,
-		ABOUT = 3
+		PLOT = 3,
+		ABOUT = 4
 	};
 
 	ManagedArray InputData = new ManagedArray();
@@ -87,7 +88,7 @@ public partial class MainWindow : Gtk.Window
 		TextLoader = new FileChooserDialog(
 			"Load Text File",
 			this,
-			FileChooserAction.Save,
+			FileChooserAction.Open,
 			"Cancel", ResponseType.Cancel,
 			"Load", ResponseType.Accept
 		);
@@ -96,6 +97,22 @@ public partial class MainWindow : Gtk.Window
 
 		TextSaver.AddFilter(AddFilter("txt", "*.txt"));
 		TextSaver.AddFilter(AddFilter("csv", "*.csv"));
+
+		ImageSaver = new FileChooserDialog(
+			"Save Filtered Image",
+			this,
+			FileChooserAction.Save,
+			"Cancel", ResponseType.Cancel,
+			"Save", ResponseType.Accept
+		);
+
+		ImageSaver.AddFilter(AddFilter("png", "*.png"));
+		ImageSaver.AddFilter(AddFilter("jpg", "*.jpg", "*.jpeg"));
+		ImageSaver.AddFilter(AddFilter("tif", "*.tif", "*.tiff"));
+		ImageSaver.AddFilter(AddFilter("bmp", "*.bmp"));
+		ImageSaver.AddFilter(AddFilter("ico", "*.ico"));
+
+		ImageSaver.Filter = ImageSaver.Filters[0];
 
 		Delimiters.Add(new Delimiter("Tab \\t", '\t'));
 		Delimiters.Add(new Delimiter("Comma ,", ','));
@@ -109,9 +126,24 @@ public partial class MainWindow : Gtk.Window
 		UpdateDelimiterBox(DelimiterBox, Delimiters);
 
 		ToggleUserInterface(Paused);
+
 		ToggleData(true);
 
+		PlotImage.Pixbuf = Common.Pixbuf(PlotImage.WidthRequest, PlotImage.HeightRequest);
+
 		Idle.Add(new IdleHandler(OnIdle));
+	}
+
+	protected void CopyToImage(Gtk.Image image, Pixbuf pixbuf, int OriginX, int OriginY)
+	{
+		if (pixbuf != null && image.Pixbuf != null)
+		{
+			image.Pixbuf.Fill(0);
+
+			pixbuf.CopyArea(OriginX, OriginY, Math.Min(image.WidthRequest, pixbuf.Width), Math.Min(image.HeightRequest, pixbuf.Height), image.Pixbuf, 0, 0);
+
+			image.QueueDraw();
+		}
 	}
 
 	protected void Reset()
@@ -166,6 +198,9 @@ public partial class MainWindow : Gtk.Window
 		SaveDataButton.Sensitive = toggle;
 
 		NewDataFileName.Sensitive = toggle;
+
+		PlotButton.Sensitive = toggle;
+		SavePlotButton.Sensitive = toggle;
 	}
 
 	protected string GetBaseFileName(string fullpath)
@@ -767,6 +802,123 @@ public partial class MainWindow : Gtk.Window
 		}
 	}
 
+	protected string GetFileName(string fullpath)
+	{
+		return System.IO.Path.GetFileNameWithoutExtension(fullpath);
+	}
+
+	protected string GetName(string fullpath)
+	{
+		return System.IO.Path.GetFileName(fullpath);
+	}
+
+	protected void SavePlot()
+	{
+		ImageSaver.Title = "Save plot";
+
+		string directory;
+
+		// Add most recent directory
+		if (!string.IsNullOrEmpty(ImageSaver.Filename))
+		{
+			directory = GetDirectory(ImageSaver.Filename);
+
+			if (Directory.Exists(directory))
+			{
+				ImageSaver.SetCurrentFolder(directory);
+			}
+		}
+
+		if (ImageSaver.Run() == (int)ResponseType.Accept)
+		{
+			if (!string.IsNullOrEmpty(ImageSaver.Filename))
+			{
+				FileName = ImageSaver.Filename;
+
+				directory = GetDirectory(FileName);
+
+				var ext = ImageSaver.Filter.Name;
+
+				var fmt = ext;
+
+				switch (ext)
+				{
+					case "jpg":
+
+						if (!FileName.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) && !FileName.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase))
+						{
+							FileName = String.Format("{0}.jpg", GetFileName(FileName));
+						}
+
+						fmt = "jpeg";
+
+						break;
+
+					case "tif":
+
+						if (!FileName.EndsWith(".tif", StringComparison.OrdinalIgnoreCase) && !FileName.EndsWith(".tiff", StringComparison.OrdinalIgnoreCase))
+						{
+							FileName = String.Format("{0}.tif", GetFileName(FileName));
+						}
+
+						fmt = "tiff";
+
+						break;
+
+					default:
+
+						FileName = String.Format("{0}.{1}", GetFileName(FileName), ext);
+
+						break;
+				}
+
+				if (PlotImage.Pixbuf != null)
+				{
+					FileName = GetName(FileName);
+
+					var fullpath = String.Format("{0}/{1}", directory, FileName);
+
+					try
+					{
+						PlotImage.Pixbuf.Save(fullpath, fmt);
+
+						FileName = fullpath;
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine("Error saving {0}: {1}", FileName, ex.Message);
+					}
+				}
+			}
+		}
+
+		ImageSaver.Hide();
+	}
+
+	protected void PlotClusters()
+	{
+		var input = DataView.Buffer.Text.Trim();
+
+		if (string.IsNullOrEmpty(input))
+			return;
+
+		if (ClusteringDone && SetupInputData(input))
+		{
+			var clusters = Convert.ToInt32(NumClusters.Value, ci);
+
+			var result = KMeans.Result();
+
+			var pixbuf = Cluster.Plot(InputData, result.Clusters, PlotImage.WidthRequest, PlotImage.HeightRequest);
+
+			if (pixbuf != null)
+			{
+				CopyToImage(PlotImage, pixbuf, 0, 0);
+
+				Common.Free(pixbuf);
+			}
+		}
+	}
+
 	protected void ClearProgressBar()
 	{
 		ClusteringProgress.Fraction = 0.0;
@@ -782,7 +934,7 @@ public partial class MainWindow : Gtk.Window
 		if (maxIterations > 0)
 		{
 			Error.Text = Convert.ToString(error, ci);
-				
+
 			ClusteringProgress.Fraction = Math.Round((double)iterations / maxIterations, 2);
 
 			ClusteringProgress.Text = iterations >= maxIterations ? "Done" : String.Format("Computing ({0}%)...", Convert.ToInt32(ClusteringProgress.Fraction * 100, ci));
@@ -805,6 +957,9 @@ public partial class MainWindow : Gtk.Window
 
 		if (Clusters != null)
 			Clusters.Free();
+
+		Common.Free(PlotImage.Pixbuf);
+		Common.Free(PlotImage);
 	}
 
 	protected void Quit()
@@ -1086,5 +1241,21 @@ public partial class MainWindow : Gtk.Window
 
 			SaveTextFile(ref NewDataFile, "Save New Data", NewDataFileName, InputData, result.Clusters);
 		}
+	}
+
+	protected void OnPlotButtonClicked(object sender, EventArgs e)
+	{
+		if (!Paused)
+			return;
+
+		PlotClusters();
+	}
+
+	protected void OnSavePlotButtonClicked(object sender, EventArgs e)
+	{
+		if (!Paused)
+			return;
+
+		SavePlot();
 	}
 }

@@ -19,6 +19,10 @@ public partial class MainWindow
 
 	private global::Gtk.Action SaveDataButton;
 
+	private global::Gtk.Action PlotButton;
+
+	private global::Gtk.Action SavePlotButton;
+
 	private global::Gtk.Fixed MainLayout;
 
 	private global::Gtk.Toolbar MainToolbar;
@@ -119,6 +123,14 @@ public partial class MainWindow
 
 	private global::Gtk.Label LabelPageSave;
 
+	private global::Gtk.Fixed LayoutPagePlot;
+
+	private global::Gtk.Image PlotImage;
+
+	private global::Gtk.Toolbar PlotToolbar;
+
+	private global::Gtk.Label LabelPagePlot;
+
 	private global::Gtk.Fixed PageLayoutAbout;
 
 	private global::Gtk.Label LabelAboutSoftware;
@@ -157,6 +169,10 @@ public partial class MainWindow
 		w1.Add(this.LoadCentroidsButton, null);
 		this.SaveDataButton = new global::Gtk.Action("SaveDataButton", null, global::Mono.Unix.Catalog.GetString("Save as new data"), "gtk-save-as");
 		w1.Add(this.SaveDataButton, null);
+		this.PlotButton = new global::Gtk.Action("PlotButton", null, global::Mono.Unix.Catalog.GetString("Plot clusters"), "gtk-media-play");
+		w1.Add(this.PlotButton, null);
+		this.SavePlotButton = new global::Gtk.Action("SavePlotButton", null, global::Mono.Unix.Catalog.GetString("Save plot as image"), "gtk-save");
+		w1.Add(this.SavePlotButton, null);
 		this.UIManager.InsertActionGroup(w1, 0);
 		this.AddAccelGroup(this.UIManager.AccelGroup);
 		this.WidthRequest = 800;
@@ -627,6 +643,39 @@ public partial class MainWindow
 		this.MainNotebook.SetTabLabel(this.PageLayoutSave, this.LabelPageSave);
 		this.LabelPageSave.ShowAll();
 		// Container child MainNotebook.Gtk.Notebook+NotebookChild
+		this.LayoutPagePlot = new global::Gtk.Fixed();
+		this.LayoutPagePlot.Name = "LayoutPagePlot";
+		this.LayoutPagePlot.HasWindow = false;
+		// Container child LayoutPagePlot.Gtk.Fixed+FixedChild
+		this.PlotImage = new global::Gtk.Image();
+		this.PlotImage.WidthRequest = 640;
+		this.PlotImage.HeightRequest = 400;
+		this.PlotImage.Name = "PlotImage";
+		this.LayoutPagePlot.Add(this.PlotImage);
+		global::Gtk.Fixed.FixedChild w53 = ((global::Gtk.Fixed.FixedChild)(this.LayoutPagePlot[this.PlotImage]));
+		w53.X = 60;
+		w53.Y = 30;
+		// Container child LayoutPagePlot.Gtk.Fixed+FixedChild
+		this.UIManager.AddUiFromString("<ui><toolbar name=\'PlotToolbar\'><toolitem name=\'PlotButton\' action=\'PlotButton\'/>" +
+				"<toolitem name=\'SavePlotButton\' action=\'SavePlotButton\'/></toolbar></ui>");
+		this.PlotToolbar = ((global::Gtk.Toolbar)(this.UIManager.GetWidget("/PlotToolbar")));
+		this.PlotToolbar.Name = "PlotToolbar";
+		this.PlotToolbar.ShowArrow = false;
+		this.PlotToolbar.ToolbarStyle = ((global::Gtk.ToolbarStyle)(0));
+		this.LayoutPagePlot.Add(this.PlotToolbar);
+		global::Gtk.Fixed.FixedChild w54 = ((global::Gtk.Fixed.FixedChild)(this.LayoutPagePlot[this.PlotToolbar]));
+		w54.X = 60;
+		w54.Y = 440;
+		this.MainNotebook.Add(this.LayoutPagePlot);
+		global::Gtk.Notebook.NotebookChild w55 = ((global::Gtk.Notebook.NotebookChild)(this.MainNotebook[this.LayoutPagePlot]));
+		w55.Position = 3;
+		// Notebook tab
+		this.LabelPagePlot = new global::Gtk.Label();
+		this.LabelPagePlot.Name = "LabelPagePlot";
+		this.LabelPagePlot.LabelProp = global::Mono.Unix.Catalog.GetString("Plot");
+		this.MainNotebook.SetTabLabel(this.LayoutPagePlot, this.LabelPagePlot);
+		this.LabelPagePlot.ShowAll();
+		// Container child MainNotebook.Gtk.Notebook+NotebookChild
 		this.PageLayoutAbout = new global::Gtk.Fixed();
 		this.PageLayoutAbout.Name = "PageLayoutAbout";
 		this.PageLayoutAbout.HasWindow = false;
@@ -636,9 +685,9 @@ public partial class MainWindow
 		this.LabelAboutSoftware.LabelProp = global::Mono.Unix.Catalog.GetString("<b>GTK Clustering Software</b>");
 		this.LabelAboutSoftware.UseMarkup = true;
 		this.PageLayoutAbout.Add(this.LabelAboutSoftware);
-		global::Gtk.Fixed.FixedChild w53 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.LabelAboutSoftware]));
-		w53.X = 20;
-		w53.Y = 20;
+		global::Gtk.Fixed.FixedChild w56 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.LabelAboutSoftware]));
+		w56.X = 20;
+		w56.Y = 20;
 		// Container child PageLayoutAbout.Gtk.Fixed+FixedChild
 		this.AboutWindow = new global::Gtk.ScrolledWindow();
 		this.AboutWindow.WidthRequest = 310;
@@ -667,18 +716,18 @@ http://cs.joensuu.fi/sipu/datasets/");
 		this.AboutView.WrapMode = ((global::Gtk.WrapMode)(2));
 		this.AboutWindow.Add(this.AboutView);
 		this.PageLayoutAbout.Add(this.AboutWindow);
-		global::Gtk.Fixed.FixedChild w55 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.AboutWindow]));
-		w55.X = 20;
-		w55.Y = 40;
+		global::Gtk.Fixed.FixedChild w58 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.AboutWindow]));
+		w58.X = 20;
+		w58.Y = 40;
 		// Container child PageLayoutAbout.Gtk.Fixed+FixedChild
 		this.LabelCredits = new global::Gtk.Label();
 		this.LabelCredits.Name = "LabelCredits";
 		this.LabelCredits.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Credits</b>");
 		this.LabelCredits.UseMarkup = true;
 		this.PageLayoutAbout.Add(this.LabelCredits);
-		global::Gtk.Fixed.FixedChild w56 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.LabelCredits]));
-		w56.X = 20;
-		w56.Y = 260;
+		global::Gtk.Fixed.FixedChild w59 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.LabelCredits]));
+		w59.X = 20;
+		w59.Y = 260;
 		// Container child PageLayoutAbout.Gtk.Fixed+FixedChild
 		this.CreditsWindow = new global::Gtk.ScrolledWindow();
 		this.CreditsWindow.WidthRequest = 310;
@@ -697,20 +746,20 @@ http://cs.joensuu.fi/sipu/datasets/");
 		this.CreditsView.WrapMode = ((global::Gtk.WrapMode)(2));
 		this.CreditsWindow.Add(this.CreditsView);
 		this.PageLayoutAbout.Add(this.CreditsWindow);
-		global::Gtk.Fixed.FixedChild w58 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.CreditsWindow]));
-		w58.X = 20;
-		w58.Y = 280;
+		global::Gtk.Fixed.FixedChild w61 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.CreditsWindow]));
+		w61.X = 20;
+		w61.Y = 280;
 		// Container child PageLayoutAbout.Gtk.Fixed+FixedChild
 		this.ClusteringImage = new global::Gtk.Image();
 		this.ClusteringImage.Name = "ClusteringImage";
 		this.ClusteringImage.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("Clustering.atoms256.png");
 		this.PageLayoutAbout.Add(this.ClusteringImage);
-		global::Gtk.Fixed.FixedChild w59 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.ClusteringImage]));
-		w59.X = 420;
-		w59.Y = 80;
+		global::Gtk.Fixed.FixedChild w62 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.ClusteringImage]));
+		w62.X = 420;
+		w62.Y = 80;
 		this.MainNotebook.Add(this.PageLayoutAbout);
-		global::Gtk.Notebook.NotebookChild w60 = ((global::Gtk.Notebook.NotebookChild)(this.MainNotebook[this.PageLayoutAbout]));
-		w60.Position = 3;
+		global::Gtk.Notebook.NotebookChild w63 = ((global::Gtk.Notebook.NotebookChild)(this.MainNotebook[this.PageLayoutAbout]));
+		w63.Position = 4;
 		// Notebook tab
 		this.LabelPageAbout = new global::Gtk.Label();
 		this.LabelPageAbout.Name = "LabelPageAbout";
@@ -718,9 +767,9 @@ http://cs.joensuu.fi/sipu/datasets/");
 		this.MainNotebook.SetTabLabel(this.PageLayoutAbout, this.LabelPageAbout);
 		this.LabelPageAbout.ShowAll();
 		this.MainLayout.Add(this.MainNotebook);
-		global::Gtk.Fixed.FixedChild w61 = ((global::Gtk.Fixed.FixedChild)(this.MainLayout[this.MainNotebook]));
-		w61.X = 20;
-		w61.Y = 60;
+		global::Gtk.Fixed.FixedChild w64 = ((global::Gtk.Fixed.FixedChild)(this.MainLayout[this.MainNotebook]));
+		w64.X = 20;
+		w64.Y = 60;
 		this.Add(this.MainLayout);
 		if ((this.Child != null))
 		{
@@ -735,6 +784,8 @@ http://cs.joensuu.fi/sipu/datasets/");
 		this.StopButton.Activated += new global::System.EventHandler(this.OnStopButtonClicked);
 		this.LoadCentroidsButton.Activated += new global::System.EventHandler(this.OnLoadCentroidsButtonClicked);
 		this.SaveDataButton.Activated += new global::System.EventHandler(this.OnSaveDataButtonClicked);
+		this.PlotButton.Activated += new global::System.EventHandler(this.OnPlotButtonClicked);
+		this.SavePlotButton.Activated += new global::System.EventHandler(this.OnSavePlotButtonClicked);
 		this.MainNotebook.SwitchPage += new global::Gtk.SwitchPageHandler(this.OnMainNotebookSwitchPage);
 		this.OpenDataButton.Clicked += new global::System.EventHandler(this.OnOpenDataButtonClicked);
 		this.ReloadDataButton.Clicked += new global::System.EventHandler(this.OnReloadDataButtonClicked);

@@ -57,6 +57,20 @@
         <property name="Tooltip" translatable="yes">Save as new data</property>
         <signal name="Activated" handler="OnSaveDataButtonClicked" />
       </action>
+      <action id="PlotButton">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-media-play</property>
+        <property name="Tooltip" translatable="yes">Plot clusters</property>
+        <signal name="Activated" handler="OnPlotButtonClicked" />
+      </action>
+      <action id="SavePlotButton">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-save</property>
+        <property name="Tooltip" translatable="yes">Save plot as image</property>
+        <signal name="Activated" handler="OnSavePlotButtonClicked" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="WidthRequest">800</property>
@@ -658,6 +672,50 @@
               </packing>
             </child>
             <child>
+              <widget class="Gtk.Fixed" id="LayoutPagePlot">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+                <child>
+                  <widget class="Gtk.Image" id="PlotImage">
+                    <property name="MemberName" />
+                    <property name="WidthRequest">640</property>
+                    <property name="HeightRequest">400</property>
+                  </widget>
+                  <packing>
+                    <property name="X">60</property>
+                    <property name="Y">30</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Toolbar" id="PlotToolbar">
+                    <property name="MemberName" />
+                    <property name="ShowArrow">False</property>
+                    <property name="ButtonStyle">Icons</property>
+                    <node name="PlotToolbar" type="Toolbar">
+                      <node type="Toolitem" action="PlotButton" />
+                      <node type="Toolitem" action="SavePlotButton" />
+                    </node>
+                  </widget>
+                  <packing>
+                    <property name="X">60</property>
+                    <property name="Y">440</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">3</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="LabelPagePlot">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">Plot</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
               <widget class="Gtk.Fixed" id="PageLayoutAbout">
                 <property name="MemberName" />
                 <property name="HasWindow">False</property>
@@ -754,7 +812,7 @@ http://cs.joensuu.fi/sipu/datasets/</property>
                 </child>
               </widget>
               <packing>
-                <property name="Position">3</property>
+                <property name="Position">4</property>
               </packing>
             </child>
             <child>

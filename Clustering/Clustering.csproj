@@ -79,6 +79,8 @@
     <Compile Include="SafeConvert.cs" />
     <Compile Include="KMeans.cs" />
     <Compile Include="ClusterOutput.cs" />
+    <Compile Include="Common.cs" />
+    <Compile Include="Cluster.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -30,6 +30,23 @@ public static class KMeans
 		}
 	}
 
+	// Fisher–Yates shuffle algorithm
+	public static void Shuffle<T>(this T[] list)
+	{
+		int n = list.Length;
+
+		for (int i = list.Length - 1; i > 1; i--)
+		{
+			int rnd = random.Next(i + 1);
+
+			T value = list[rnd];
+
+			list[rnd] = list[i];
+
+			list[i] = value;
+		}
+	}
+
 	// Initialize centroids by randomly selecting K samples from X. K is the total number of clusters.
 	static ManagedArray Initialize(ManagedArray input, int clusters = 0)
 	{
@@ -154,16 +171,16 @@ public static class KMeans
 	static void CommonSetup(ManagedArray input, int iterations)
 	{
 		// Initialize cluster assignment
-        ManagedOps.Free(Clusters);
-        Clusters = new ManagedIntList(input.y, 0);
+		ManagedOps.Free(Clusters);
+		Clusters = new ManagedIntList(input.y, 0);
 
 		NumClusters = Centroids.y;
 
 		Iterations = 0;
 
-        MaxIterations = iterations;
+		MaxIterations = iterations;
 
-        Error = 0.0;
+		Error = 0.0;
 	}
 
 	public static void Setup(ManagedArray input, int clusters, int iterations = 100)
