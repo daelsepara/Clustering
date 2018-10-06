@@ -129,6 +129,16 @@ public partial class MainWindow
 
 	private global::Gtk.Toolbar PlotToolbar;
 
+	private global::Gtk.Label LabelPlotFeatures;
+
+	private global::Gtk.Label LabelX;
+
+	private global::Gtk.SpinButton Feature1;
+
+	private global::Gtk.Label LabelY;
+
+	private global::Gtk.SpinButton Feature2;
+
 	private global::Gtk.Label LabelPagePlot;
 
 	private global::Gtk.Fixed PageLayoutAbout;
@@ -666,9 +676,57 @@ public partial class MainWindow
 		global::Gtk.Fixed.FixedChild w54 = ((global::Gtk.Fixed.FixedChild)(this.LayoutPagePlot[this.PlotToolbar]));
 		w54.X = 60;
 		w54.Y = 440;
+		// Container child LayoutPagePlot.Gtk.Fixed+FixedChild
+		this.LabelPlotFeatures = new global::Gtk.Label();
+		this.LabelPlotFeatures.Name = "LabelPlotFeatures";
+		this.LabelPlotFeatures.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Features</b>");
+		this.LabelPlotFeatures.UseMarkup = true;
+		this.LayoutPagePlot.Add(this.LabelPlotFeatures);
+		global::Gtk.Fixed.FixedChild w55 = ((global::Gtk.Fixed.FixedChild)(this.LayoutPagePlot[this.LabelPlotFeatures]));
+		w55.X = 270;
+		w55.Y = 450;
+		// Container child LayoutPagePlot.Gtk.Fixed+FixedChild
+		this.LabelX = new global::Gtk.Label();
+		this.LabelX.Name = "LabelX";
+		this.LabelX.LabelProp = global::Mono.Unix.Catalog.GetString("X");
+		this.LayoutPagePlot.Add(this.LabelX);
+		global::Gtk.Fixed.FixedChild w56 = ((global::Gtk.Fixed.FixedChild)(this.LayoutPagePlot[this.LabelX]));
+		w56.X = 350;
+		w56.Y = 450;
+		// Container child LayoutPagePlot.Gtk.Fixed+FixedChild
+		this.Feature1 = new global::Gtk.SpinButton(0D, 100D, 1D);
+		this.Feature1.WidthRequest = 100;
+		this.Feature1.Name = "Feature1";
+		this.Feature1.Adjustment.PageIncrement = 10D;
+		this.Feature1.ClimbRate = 1D;
+		this.Feature1.Numeric = true;
+		this.LayoutPagePlot.Add(this.Feature1);
+		global::Gtk.Fixed.FixedChild w57 = ((global::Gtk.Fixed.FixedChild)(this.LayoutPagePlot[this.Feature1]));
+		w57.X = 370;
+		w57.Y = 445;
+		// Container child LayoutPagePlot.Gtk.Fixed+FixedChild
+		this.LabelY = new global::Gtk.Label();
+		this.LabelY.Name = "LabelY";
+		this.LabelY.LabelProp = global::Mono.Unix.Catalog.GetString("Y");
+		this.LayoutPagePlot.Add(this.LabelY);
+		global::Gtk.Fixed.FixedChild w58 = ((global::Gtk.Fixed.FixedChild)(this.LayoutPagePlot[this.LabelY]));
+		w58.X = 480;
+		w58.Y = 450;
+		// Container child LayoutPagePlot.Gtk.Fixed+FixedChild
+		this.Feature2 = new global::Gtk.SpinButton(0D, 100D, 1D);
+		this.Feature2.WidthRequest = 100;
+		this.Feature2.Name = "Feature2";
+		this.Feature2.Adjustment.PageIncrement = 10D;
+		this.Feature2.ClimbRate = 1D;
+		this.Feature2.Numeric = true;
+		this.Feature2.Value = 1D;
+		this.LayoutPagePlot.Add(this.Feature2);
+		global::Gtk.Fixed.FixedChild w59 = ((global::Gtk.Fixed.FixedChild)(this.LayoutPagePlot[this.Feature2]));
+		w59.X = 500;
+		w59.Y = 445;
 		this.MainNotebook.Add(this.LayoutPagePlot);
-		global::Gtk.Notebook.NotebookChild w55 = ((global::Gtk.Notebook.NotebookChild)(this.MainNotebook[this.LayoutPagePlot]));
-		w55.Position = 3;
+		global::Gtk.Notebook.NotebookChild w60 = ((global::Gtk.Notebook.NotebookChild)(this.MainNotebook[this.LayoutPagePlot]));
+		w60.Position = 3;
 		// Notebook tab
 		this.LabelPagePlot = new global::Gtk.Label();
 		this.LabelPagePlot.Name = "LabelPagePlot";
@@ -685,9 +743,9 @@ public partial class MainWindow
 		this.LabelAboutSoftware.LabelProp = global::Mono.Unix.Catalog.GetString("<b>GTK Clustering Software</b>");
 		this.LabelAboutSoftware.UseMarkup = true;
 		this.PageLayoutAbout.Add(this.LabelAboutSoftware);
-		global::Gtk.Fixed.FixedChild w56 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.LabelAboutSoftware]));
-		w56.X = 20;
-		w56.Y = 20;
+		global::Gtk.Fixed.FixedChild w61 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.LabelAboutSoftware]));
+		w61.X = 20;
+		w61.Y = 20;
 		// Container child PageLayoutAbout.Gtk.Fixed+FixedChild
 		this.AboutWindow = new global::Gtk.ScrolledWindow();
 		this.AboutWindow.WidthRequest = 310;
@@ -716,18 +774,18 @@ http://cs.joensuu.fi/sipu/datasets/");
 		this.AboutView.WrapMode = ((global::Gtk.WrapMode)(2));
 		this.AboutWindow.Add(this.AboutView);
 		this.PageLayoutAbout.Add(this.AboutWindow);
-		global::Gtk.Fixed.FixedChild w58 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.AboutWindow]));
-		w58.X = 20;
-		w58.Y = 40;
+		global::Gtk.Fixed.FixedChild w63 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.AboutWindow]));
+		w63.X = 20;
+		w63.Y = 40;
 		// Container child PageLayoutAbout.Gtk.Fixed+FixedChild
 		this.LabelCredits = new global::Gtk.Label();
 		this.LabelCredits.Name = "LabelCredits";
 		this.LabelCredits.LabelProp = global::Mono.Unix.Catalog.GetString("<b>Credits</b>");
 		this.LabelCredits.UseMarkup = true;
 		this.PageLayoutAbout.Add(this.LabelCredits);
-		global::Gtk.Fixed.FixedChild w59 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.LabelCredits]));
-		w59.X = 20;
-		w59.Y = 260;
+		global::Gtk.Fixed.FixedChild w64 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.LabelCredits]));
+		w64.X = 20;
+		w64.Y = 260;
 		// Container child PageLayoutAbout.Gtk.Fixed+FixedChild
 		this.CreditsWindow = new global::Gtk.ScrolledWindow();
 		this.CreditsWindow.WidthRequest = 310;
@@ -746,20 +804,20 @@ http://cs.joensuu.fi/sipu/datasets/");
 		this.CreditsView.WrapMode = ((global::Gtk.WrapMode)(2));
 		this.CreditsWindow.Add(this.CreditsView);
 		this.PageLayoutAbout.Add(this.CreditsWindow);
-		global::Gtk.Fixed.FixedChild w61 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.CreditsWindow]));
-		w61.X = 20;
-		w61.Y = 280;
+		global::Gtk.Fixed.FixedChild w66 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.CreditsWindow]));
+		w66.X = 20;
+		w66.Y = 280;
 		// Container child PageLayoutAbout.Gtk.Fixed+FixedChild
 		this.ClusteringImage = new global::Gtk.Image();
 		this.ClusteringImage.Name = "ClusteringImage";
 		this.ClusteringImage.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("Clustering.atoms256.png");
 		this.PageLayoutAbout.Add(this.ClusteringImage);
-		global::Gtk.Fixed.FixedChild w62 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.ClusteringImage]));
-		w62.X = 420;
-		w62.Y = 80;
+		global::Gtk.Fixed.FixedChild w67 = ((global::Gtk.Fixed.FixedChild)(this.PageLayoutAbout[this.ClusteringImage]));
+		w67.X = 420;
+		w67.Y = 80;
 		this.MainNotebook.Add(this.PageLayoutAbout);
-		global::Gtk.Notebook.NotebookChild w63 = ((global::Gtk.Notebook.NotebookChild)(this.MainNotebook[this.PageLayoutAbout]));
-		w63.Position = 4;
+		global::Gtk.Notebook.NotebookChild w68 = ((global::Gtk.Notebook.NotebookChild)(this.MainNotebook[this.PageLayoutAbout]));
+		w68.Position = 4;
 		// Notebook tab
 		this.LabelPageAbout = new global::Gtk.Label();
 		this.LabelPageAbout.Name = "LabelPageAbout";
@@ -767,9 +825,9 @@ http://cs.joensuu.fi/sipu/datasets/");
 		this.MainNotebook.SetTabLabel(this.PageLayoutAbout, this.LabelPageAbout);
 		this.LabelPageAbout.ShowAll();
 		this.MainLayout.Add(this.MainNotebook);
-		global::Gtk.Fixed.FixedChild w64 = ((global::Gtk.Fixed.FixedChild)(this.MainLayout[this.MainNotebook]));
-		w64.X = 20;
-		w64.Y = 60;
+		global::Gtk.Fixed.FixedChild w69 = ((global::Gtk.Fixed.FixedChild)(this.MainLayout[this.MainNotebook]));
+		w69.X = 20;
+		w69.Y = 60;
 		this.Add(this.MainLayout);
 		if ((this.Child != null))
 		{

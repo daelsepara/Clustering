@@ -902,13 +902,17 @@ public partial class MainWindow : Gtk.Window
 		if (string.IsNullOrEmpty(input))
 			return;
 
-		if (ClusteringDone && SetupInputData(input))
+		var feature1 = Convert.ToInt32(Feature1.Value);
+		var feature2 = Convert.ToInt32(Feature2.Value);
+		var features = Convert.ToInt32(Features.Value);
+
+		if (ClusteringDone && SetupInputData(input) && feature1 >= 0 && feature1 < features && feature2 >= 0 && feature2 < features && feature1 != feature2)
 		{
 			var clusters = Convert.ToInt32(NumClusters.Value, ci);
 
 			var result = KMeans.Result();
 
-			var pixbuf = Cluster.Plot(InputData, result.Clusters, PlotImage.WidthRequest, PlotImage.HeightRequest);
+			var pixbuf = Cluster.Plot(InputData, result.Clusters, PlotImage.WidthRequest, PlotImage.HeightRequest, feature1, feature2);
 
 			if (pixbuf != null)
 			{
