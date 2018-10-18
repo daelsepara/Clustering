@@ -33,15 +33,15 @@ namespace DeepLearnCS
             return temp;
         }
 
-		public static int* IntList(int size, int val)
+        public static int* IntList(int size, int val)
         {
             var temp = (int*)Marshal.AllocHGlobal(size * sizeof(int));
-            
-			for (int i = 0; i<size; i++)
+
+            for (int i = 0; i < size; i++)
                 temp[i] = val;
 
-			return temp;
-		}
+            return temp;
+        }
 
         public static void Free(double* item)
         {

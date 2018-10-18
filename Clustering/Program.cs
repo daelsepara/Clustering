@@ -7,12 +7,12 @@ namespace Clustering
         public static void Main(string[] args)
         {
             Application.Init();
-            
-			MainWindow win = new MainWindow();
-            
-			win.Show();
-            
-			Application.Run();
+
+            MainWindow win = new MainWindow();
+
+            win.Show();
+
+            Application.Run();
         }
     }
 }

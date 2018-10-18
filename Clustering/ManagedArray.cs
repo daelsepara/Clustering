@@ -13,11 +13,11 @@ namespace DeepLearnCS
             Data = MemOps.IntList(size);
         }
 
-		public ManagedIntList(int size, int val)
+        public ManagedIntList(int size, int val)
         {
             x = size;
 
-			Data = MemOps.IntList(size, val);
+            Data = MemOps.IntList(size, val);
         }
 
         // 1D arrays
