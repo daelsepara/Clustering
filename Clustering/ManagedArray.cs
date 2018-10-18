@@ -1,218 +1,218 @@
 namespace DeepLearnCS
 {
-	unsafe public class ManagedIntList
-	{
-		int* Data = null;
+    unsafe public class ManagedIntList
+    {
+        int* Data = null;
 
-		public int x;
+        public int x;
 
-		public ManagedIntList()
-		{
+        public ManagedIntList(int size)
+        {
+            x = size;
 
-		}
-
-		public ManagedIntList(int size)
-		{
-			x = size;
-
-			Data = MemOps.IntList(size);
-		}
+            Data = MemOps.IntList(size);
+        }
 
 		public ManagedIntList(int size, int val)
-		{
-			x = size;
+        {
+            x = size;
 
 			Data = MemOps.IntList(size, val);
-		}
+        }
 
-		// 1D arrays
-		public int this[int ix]
-		{
-			get
-			{
-				return Data[ix];
-			}
+        // 1D arrays
+        public int this[int ix]
+        {
+            get
+            {
+                return Data[ix];
+            }
 
-			set
-			{
-				Data[ix] = value;
-			}
-		}
+            set
+            {
+                Data[ix] = value;
+            }
+        }
 
-		public void Free()
-		{
-			MemOps.Free(Data);
+        public int Length()
+        {
+            return x;
+        }
 
-			x = 0;
+        public void Free()
+        {
+            MemOps.Free(Data);
 
-			Data = null;
-		}
-	}
+            x = 0;
 
-	unsafe public class ManagedArray
-	{
-		double* Data = null;
+            Data = null;
+        }
+    }
 
-		public int x;
-		public int y;
-		public int z;
-		public int i;
-		public int j;
+    unsafe public class ManagedArray
+    {
+        double* Data = null;
 
-		public ManagedArray()
-		{
+        public int x;
+        public int y;
+        public int z;
+        public int i;
+        public int j;
 
-		}
+        public ManagedArray()
+        {
 
-		public ManagedArray(ManagedArray a, bool initialize = true)
-		{
-			Resize(a, initialize);
-		}
+        }
 
-		public ManagedArray(int size, bool initialize = true)
-		{
-			Resize(size, initialize);
-		}
+        public ManagedArray(ManagedArray a, bool initialize = true)
+        {
+            Resize(a, initialize);
+        }
 
-		public ManagedArray(int sizex, int sizey, bool initialize = true)
-		{
-			Resize(sizex, sizey, initialize);
-		}
+        public ManagedArray(int size, bool initialize = true)
+        {
+            Resize(size, initialize);
+        }
 
-		public ManagedArray(int sizex, int sizey, int sizez, bool initialize = true)
-		{
-			Resize(sizex, sizey, sizez, initialize);
-		}
+        public ManagedArray(int sizex, int sizey, bool initialize = true)
+        {
+            Resize(sizex, sizey, initialize);
+        }
 
-		// For 4D arrays of type: [i][j] of [x][y] and [i] of [x][y][z]
-		public ManagedArray(int sizex, int sizey, int sizez, int sizei, int sizej, bool initialize = true)
-		{
-			Resize(sizex, sizey, sizez, sizei, sizej, initialize);
-		}
+        public ManagedArray(int sizex, int sizey, int sizez, bool initialize = true)
+        {
+            Resize(sizex, sizey, sizez, initialize);
+        }
 
-		public double this[int ix]
-		{
-			get
-			{
-				return Data[ix];
-			}
+        // For 4D arrays of type: [i][j] of [x][y] and [i] of [x][y][z]
+        public ManagedArray(int sizex, int sizey, int sizez, int sizei, int sizej, bool initialize = true)
+        {
+            Resize(sizex, sizey, sizez, sizei, sizej, initialize);
+        }
 
-			set
-			{
-				Data[ix] = value;
-			}
-		}
+        public double this[int ix]
+        {
+            get
+            {
+                return Data[ix];
+            }
 
-		public double this[int ix, int iy]
-		{
-			get
-			{
-				return Data[iy * x + ix];
-			}
+            set
+            {
+                Data[ix] = value;
+            }
+        }
 
-			set
-			{
-				Data[iy * x + ix] = value;
-			}
-		}
+        public double this[int ix, int iy]
+        {
+            get
+            {
+                return Data[iy * x + ix];
+            }
 
-		public double this[int ix, int iy, int iz]
-		{
-			get
-			{
-				return Data[(iz * y + iy) * x + ix];
-			}
+            set
+            {
+                Data[iy * x + ix] = value;
+            }
+        }
 
-			set
-			{
-				Data[(iz * y + iy) * x + ix] = value;
-			}
-		}
+        public double this[int ix, int iy, int iz]
+        {
+            get
+            {
+                return Data[(iz * y + iy) * x + ix];
+            }
 
-		public void Resize(int size, bool initialize = true)
-		{
-			MemOps.Free(Data);
+            set
+            {
+                Data[(iz * y + iy) * x + ix] = value;
+            }
+        }
 
-			x = size;
-			y = 1;
-			z = 1;
-			i = 1;
-			j = 1;
+        public void Resize(int size, bool initialize = true)
+        {
+            MemOps.Free(Data);
 
-			Data = MemOps.New(size, initialize);
-		}
+            x = size;
+            y = 1;
+            z = 1;
+            i = 1;
+            j = 1;
 
-		public void Resize(int sizex, int sizey, bool initialize = true)
-		{
-			MemOps.Free(Data);
+            Data = MemOps.New(size, initialize);
+        }
 
-			x = sizex;
-			y = sizey;
-			z = 1;
-			i = 1;
-			j = 1;
+        public void Resize(int sizex, int sizey, bool initialize = true)
+        {
+            MemOps.Free(Data);
 
-			Data = MemOps.New(x, y, initialize);
-		}
+            x = sizex;
+            y = sizey;
+            z = 1;
+            i = 1;
+            j = 1;
 
-		public void Resize(int sizex, int sizey, int sizez, bool initialize = true)
-		{
-			MemOps.Free(Data);
+            Data = MemOps.New(x, y, initialize);
+        }
 
-			x = sizex;
-			y = sizey;
-			z = sizez;
-			i = 1;
-			j = 1;
+        public void Resize(int sizex, int sizey, int sizez, bool initialize = true)
+        {
+            MemOps.Free(Data);
 
-			Data = MemOps.New(x * y * z, initialize);
-		}
+            x = sizex;
+            y = sizey;
+            z = sizez;
+            i = 1;
+            j = 1;
 
-		// For 4D arrays of type: [i][j] of [x][y] and [i] of [x][y][z]
-		public void Resize(int sizex, int sizey, int sizez, int sizei, int sizej, bool initialize = true)
-		{
-			MemOps.Free(Data);
+            Data = MemOps.New(x * y * z, initialize);
+        }
 
-			x = sizex;
-			y = sizey;
-			z = sizez;
-			i = sizei;
-			j = sizej;
+        // For 4D arrays of type: [i][j] of [x][y] and [i] of [x][y][z]
+        public void Resize(int sizex, int sizey, int sizez, int sizei, int sizej, bool initialize = true)
+        {
+            MemOps.Free(Data);
 
-			Data = MemOps.New(x * y * z * i * j, initialize);
-		}
+            x = sizex;
+            y = sizey;
+            z = sizez;
+            i = sizei;
+            j = sizej;
 
-		public void Resize(ManagedArray a, bool initialize = true)
-		{
-			Resize(a.x, a.y, a.z, a.i, a.j, initialize);
-		}
+            Data = MemOps.New(x * y * z * i * j, initialize);
+        }
 
-		public int Length()
-		{
-			return x * y * z * i * j;
-		}
+        public void Resize(ManagedArray a, bool initialize = true)
+        {
+            Resize(a.x, a.y, a.z, a.i, a.j, initialize);
+        }
 
-		// Reshape without modifying data
-		public void Reshape(int ix = 1, int iy = 1, int iz = 1, int ii = 1, int ij = 1)
-		{
-			x = ix;
-			y = iy;
-			z = iz;
-			i = ii;
-			j = ij;
-		}
+        public int Length()
+        {
+            return x * y * z * i * j;
+        }
 
-		public void Free()
-		{
-			MemOps.Free(Data);
+        // Reshape without modifying data
+        public void Reshape(int ix = 1, int iy = 1, int iz = 1, int ii = 1, int ij = 1)
+        {
+            x = ix;
+            y = iy;
+            z = iz;
+            i = ii;
+            j = ij;
+        }
 
-			x = 0;
-			y = 0;
-			z = 0;
-			i = 0;
-			j = 0;
+        public void Free()
+        {
+            MemOps.Free(Data);
 
-			Data = null;
-		}
-	}
+            x = 0;
+            y = 0;
+            z = 0;
+            i = 0;
+            j = 0;
+
+            Data = null;
+        }
+    }
 }

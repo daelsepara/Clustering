@@ -7,11 +7,11 @@ public static class KMeans
 	static Random random = new Random(Guid.NewGuid().GetHashCode());
 	public static int Iterations;
 	public static int MaxIterations;
-	public static double Error = 0.0;
+	public static double Error;
 
-	static ManagedArray Centroids = null;
-	static ManagedIntList Clusters = null;
-	static int NumClusters = 0;
+	static ManagedArray Centroids;
+	static ManagedIntList Clusters;
+	static int NumClusters;
 
 	// Fisher–Yates shuffle algorithm
 	static void Shuffle<T>(this IList<T> list)
@@ -83,7 +83,7 @@ public static class KMeans
 		{
 			for (var j = 0; j < m; j++)
 			{
-				var sum = 0.0;
+				double sum = 0;
 
 				for (var x = 0; x < input.x; x++)
 				{
@@ -98,7 +98,7 @@ public static class KMeans
 
 		var clusterList = new ManagedIntList(m, 0);
 
-		Error = 0.0;
+		Error = 0;
 
 		for (var j = 0; j < m; j++)
 		{
@@ -159,7 +159,7 @@ public static class KMeans
 
 			for (var x = 0; x < n; x++)
 			{
-				centroids[x, cluster] = pts > 0 ? colSums[x, cluster] / pts : 0.0;
+				centroids[x, cluster] = pts > 0 ? colSums[x, cluster] / pts : 0;
 			}
 		}
 
@@ -180,7 +180,7 @@ public static class KMeans
 
 		MaxIterations = iterations;
 
-		Error = 0.0;
+		Error = 0;
 	}
 
 	public static void Setup(ManagedArray input, int clusters, int iterations = 100)

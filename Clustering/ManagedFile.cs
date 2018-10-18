@@ -6,7 +6,7 @@ namespace DeepLearnCS
 {
 	public static class ManagedFile
 	{
-		public static CultureInfo ci = new CultureInfo("en-us");
+		public static CultureInfo ci = new CultureInfo("en-US");
 
 		public static void Load1D(string filename, ManagedArray A, char delimiter = ',')
 		{
@@ -27,24 +27,6 @@ namespace DeepLearnCS
 		}
 
 		public static void Save1D(string filename, ManagedArray A, char delimiter = ',')
-		{
-			using (var file = new StreamWriter(filename, false))
-			{
-				for (int x = 0; x < A.x; x++)
-				{
-					file.Write(A[x].ToString(ci));
-
-					if (x < A.x - 1)
-					{
-						file.Write(delimiter);
-					}
-				}
-
-				file.WriteLine();
-			}
-		}
-
-		public static void Save1D(string filename, ManagedIntList A, char delimiter = ',')
 		{
 			using (var file = new StreamWriter(filename, false))
 			{
@@ -194,7 +176,6 @@ namespace DeepLearnCS
 					for (int x = 0; x < A.x; x++)
 					{
 						file.Write(A[x, y].ToString(ci));
-
 						file.Write(delimiter);
 					}
 

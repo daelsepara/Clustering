@@ -925,7 +925,7 @@ public partial class MainWindow : Gtk.Window
 
 	protected void ClearProgressBar()
 	{
-		ClusteringProgress.Fraction = 0.0;
+		ClusteringProgress.Fraction = 0;
 		ClusteringProgress.Text = "";
 	}
 

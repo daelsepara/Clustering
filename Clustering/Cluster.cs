@@ -28,7 +28,7 @@ public static class Cluster
 		{
 			for (var i = 0; i < Rows(x); i++)
 			{
-				if (Math.Abs(deltax) > 0.0 && Math.Abs(deltay) > 0.0)
+				if (Math.Abs(deltax) > 0 && Math.Abs(deltay) > 0)
 				{
 					var xp = (int)((x[f1, i] - minx) / deltax);
 					var yp = (int)((x[f2, i] - miny) / deltay);
